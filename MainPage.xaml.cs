@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Java.Lang;
 
 namespace GameTimer;
 
@@ -7,7 +8,8 @@ public partial class MainPage : ContentPage
 	int count = 0;
 	int players_count = 4;
 	bool pause = false;
-	turn_add_time = 0;
+	int game_time = 30;  // len of players time in sec
+	int turn_add_time = 4; // how much sec shoud be added after turn
 	Dictionary<int, string> players = new Dictionary<int, string>
 		{
 			{ 1, "White" },
@@ -20,8 +22,8 @@ public partial class MainPage : ContentPage
 			{ 8, "Orange" },
 		};
 
-
-
+	// Class player: number, color, time
+	// Class timer: change btn title and colour according current player
 
 	public MainPage()
 	{
