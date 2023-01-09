@@ -9,6 +9,12 @@
     <Color x:Key="Tertiary">#2B0B98</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
+    <Color x:Key="Yellow">#f2ea05</Color>
+    <Color x:Key="Blue">#05d3f2</Color>
+    <Color x:Key="Red">#f20511</Color>
+    <Color x:Key="Green">#05f209</Color>
+    <Color x:Key="Purple">#f205ce</Color>
+    <Color x:Key="Orange">#f2ab05</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
