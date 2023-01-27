@@ -4,22 +4,10 @@ namespace GameTimer;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-	int players_count = 4;
-	bool pause = false;
-	int game_time = 30;  // len of players time in sec
-	int turn_add_time = 4; // how much sec shoud be added after turn
-	Dictionary<int, string> players = new Dictionary<int, string>
-		{
-			{ 1, "White" },
-			{ 2, "Black" },
-			{ 3, "Yellow" },
-			{ 4, "Blue" },
-			{ 5, "Red" },
-			{ 6, "Green" },
-			{ 7, "Purple" },
-			{ 8, "Orange" },
-		};
+	Configurations config = new Configurations();
+	Game game = new Game();
+
+
 
 	// Class player: number, color, time
 	// Class timer: change btn title and colour according current player
@@ -29,31 +17,47 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void PlayBtnPress(object sender, EventArgs e)
 	{
-		count++;
+		bool game = true;
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+		if (!game) // if Game not started
+			{
+			this.InitGame();
+			PlayBtn.Text = $"players and timers";
+			}
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		else if (config.pause)  // game on pause
+			config.pause = false ;
+
+		this.Turn();
 	}
 
-	private void OpenSettings(object sender, EventArgs e)
+	private void SettingsBtnPress(object sender, EventArgs e)
 	{
-		if (players_count != 8)
-			players_count++;
-		else players_count = 1;
-		SettingsBtn.Text = $"Players: {players_count}";
+		if (config.players_count != 8)
+			config.players_count++;
+		else config.players_count = 1;
+		this.InitGame();
+		SettingsBtn.Text = $"Players: {config.players_count}";
 
 	}
 
-	private void PauseGame(object sender, EventArgs e)
+	private void PauseBtnPress(object sender, EventArgs e)
 	{
-		PauseBtn.Text = pause ? "Resume" : "Pause";
-		pause = !pause;
+		PauseBtn.Text = config.pause ? "Resume" : "Pause";
+		config.pause = !config.pause;
+	}
+
+	private void Turn() 
+	{
+		PlayBtn.Text = $"Clicked times";
+		SemanticScreenReader.Announce(PlayBtn.Text);
+	}
+
+	private void InitGame()
+	{
+
 	}
 }
 
