@@ -9,19 +9,19 @@ namespace GameTimer
 	public class Configurations
 	{
 		public int players_count = 4;
-		public bool pause = false;
 		public int game_time = 30 * 60;  // len of players time in sec
 		public int turn_add_time = 7; // how much sec shoud be added after turn
-		public Dictionary<string, string> players = new()  // name, colour 
+
+		public Dictionary<int, Dictionary<string, string>> players = new Dictionary<int, Dictionary<string, string>>()
 		{
-			{ "Player 1", "White" },
-			{ "Player 2", "Black" },
-			{ "Player 3", "Yellow" },
-			{ "Player 4", "Blue" },
-			{ "Player 5", "Red" },
-			{ "Player 6", "Green" },
-			{ "Player 7", "Purple" },
-			{ "Player 8", "Orange" },
+			{1, new Dictionary<string, string>() { { "name", "Player 1" }, { "colour", "White" } } },
+			{2, new Dictionary<string, string>() { { "name", "Player 2" }, { "colour", "Black" } } },
+			{3, new Dictionary<string, string>() { { "name", "Player 3" }, { "colour", "Yellow" } } },
+			{4, new Dictionary<string, string>() { { "name", "Player 4" }, { "colour", "Blue" } } },
+			{5, new Dictionary<string, string>() { { "name", "Player 5" }, { "colour", "Red" } } },
+			{6, new Dictionary<string, string>() { { "name", "Player 6" }, { "colour", "Green" } } },
+			{7, new Dictionary<string, string>() { { "name", "Player 7" }, { "colour", "Purple" } } },
+			{8, new Dictionary<string, string>() { { "name", "Player 8" }, { "colour", "Orange" } } }
 		};
 	}
 }

@@ -41,8 +41,8 @@
 
         <Button
                 x:Name="PlayBtn"
-                Text=""
-                SemanticProperties.Hint="MOve turn to next player"
+                Text="Start Game"
+                SemanticProperties.Hint="Move turn to next player"
                 Clicked="PlayBtnPress"
                 HorizontalOptions="FillAndExpand" 
                 VerticalOptions="Fill"
