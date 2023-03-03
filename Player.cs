@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameTimer
 {
-    internal class Player
+    public class Player
     {
         public string Name { get; set; }
         public string Colour { get; set; }

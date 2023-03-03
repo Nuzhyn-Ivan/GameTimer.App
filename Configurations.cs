@@ -9,7 +9,7 @@ namespace GameTimer
 	public class Configurations
 	{
 		public int players_count = 4;
-		public int game_time = 30 * 60;  // len of players time in sec
+		public int game_time = 3 * 3;  // len of players time in sec
 		public int turn_add_time = 7; // how much sec shoud be added after turn
 
 		public Dictionary<int, Dictionary<string, string>> players = new Dictionary<int, Dictionary<string, string>>()
