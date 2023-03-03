@@ -2,9 +2,8 @@
 
 public partial class MainPage : ContentPage
 {
-	public Configurations config = new Configurations();
-	Game game = new Game();
-	private bool timer = false;
+	public Configurations config = null;
+	public Game game = null;
 
 
 
@@ -14,20 +13,17 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+		this.config = new Configurations();	
+		this.game = new Game(this.config, this);
+		this.InitGame();
+
 	}
 
 	private void PlayBtnPress(object sender, EventArgs e)
 	{
 
-		if (this.game.players.Count == 0) // if Game not started
-			{
-			this.InitGame();
-			PlayBtn.Text = PlayersRepr();
-		}
-
-		game.player_turn = game.get_next_player();
-
-		this.Turn();
+		game.turn_player_id = game.get_next_player_id();
+		game.Turn();
 	}
 
 	private void SettingsBtnPress(object sender, EventArgs e)
@@ -46,24 +42,11 @@ public partial class MainPage : ContentPage
 		game.pause = !game.pause;
 		if (!game.pause)
 		{
-			this.Turn();
+			game.Turn();
 		}
 
 	}
 
-	private void Turn() 
-	{
-		if (String.IsNullOrEmpty(game.player_turn)) 
-			{
-			string first_player_name = config.players[1]["name"];
-			game.player_turn = first_player_name;
-			}
-		if (game.pause)
-		{
-			Device.StartTimer(TimeSpan.FromMilliseconds(1000), this.Timer_Tick);
-			game.pause = false;
-		}
-	}
 
 	private string PlayersRepr()
 	{
@@ -80,9 +63,12 @@ public partial class MainPage : ContentPage
 	}
 	private void InitGame()
 	{
-		this.game = new Game(this.config);
-	}
-	private bool Timer_Tick()
+		this.game = new Game(this.config, this);
+        PlayBtn.Text = PlayersRepr();
+		this.game.turn_player_id = 1;
+
+    }
+    public bool Timer_Tick()
 	{
 		if (game.pause) 
 		{ 
