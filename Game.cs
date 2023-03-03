@@ -11,7 +11,7 @@ namespace GameTimer
 	{
 		public bool pause = false;
         private bool timerCreated = false;
-        public int turn_player_id;
+        public Player currentPlayer;
         public List<Player> playersList = new List<Player>();
         private  Configurations config = new Configurations();
 		private MainPage main = null;
@@ -29,20 +29,24 @@ namespace GameTimer
                 Dictionary<string, string> playerDict = config.players[i];
                 string name = playerDict["name"];
                 string colour = playerDict["colour"];
-                Player player = new Player(name, colour, config.game_time);
+                Player player = new Player(i, name, colour, config.game_time);
                 playersList.Add(player);
             }
+            this.currentPlayer = playersList[0];
 
         }
-		public int get_next_player_id() 
+		public Player GetNextPlayer() 
 		{
-	
-			if (this.turn_player_id == this.playersList.Count() - 1) 
+			int player_index = this.playersList.IndexOf(this.currentPlayer);
+
+
+			if (player_index == this.playersList.Count() - 1)
 			{
-				return 0;
+                // return first player if player_index is the index of last player 
+                return this.playersList[0];
 			}
 			else
-				return this.turn_player_id + 1;
+				return this.playersList[player_index + 1];
 
 		}
 		public void Turn()
@@ -55,13 +59,27 @@ namespace GameTimer
             }
 			else 
 			{
-				this.playersList[this.turn_player_id].Time += this.config.turn_add_time;
-                this.turn_player_id = this.get_next_player_id();
+                this.currentPlayer.Time += this.config.turn_add_time;
+                this.currentPlayer = this.GetNextPlayer();
             }
 			
 		}
 
-	}
+		public void tickCurrentPlayer()
+        {
+            this.currentPlayer.Time -= 1;
+
+            if (this.currentPlayer.Time == 0)
+            {
+                Player player = this.currentPlayer;
+                this.currentPlayer = this.GetNextPlayer();
+                this.playersList.Remove(player);
+                
+            }
+        }
+
+
+    }
 
 }
 

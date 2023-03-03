@@ -13,7 +13,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		this.config = new Configurations();	
+        this.config = new Configurations();	
 		this.game = new Game(this.config, this);
 		this.InitGame();
 
@@ -48,8 +48,11 @@ public partial class MainPage : ContentPage
 
 	private string PlayersRepr()
 	{
-		string players_repr = "";
-		foreach (Player player in game.playersList)
+        double screenWidth = DeviceDisplay.MainDisplayInfo.Width;
+        PlayBtn.FontSize = screenWidth / 20;
+
+        string players_repr = "";
+        foreach (Player player in game.playersList)
         {
 			// TODO: text to take all widget size
 			TimeSpan time = TimeSpan.FromSeconds(player.Time);
@@ -62,8 +65,7 @@ public partial class MainPage : ContentPage
 	private void InitGame()
 	{
 		this.game = new Game(this.config, this);
-        PlayBtn.Text = PlayersRepr();
-		this.game.turn_player_id = 0;
+		
 
     }
     public bool Timer_Tick()
@@ -72,20 +74,12 @@ public partial class MainPage : ContentPage
 		{ 
 			return false; 
 		}
-		
-		game.playersList[game.turn_player_id].Time -= 1;
 
-		if (game.playersList[game.turn_player_id].Time <= 0 & game.playersList.Count() > 1) 
-		{
-			game.playersList.RemoveAt(game.turn_player_id);
-        }
+		game.tickCurrentPlayer();
 
-		if (game.turn_player_id + 1 > game.playersList.Count()) 
-		{
-			// workaround - when last player time ended need to change index
-            game.turn_player_id = game.playersList.Count() - 2;
-
-        }
+		if (game.playersList.Count() == 1)
+			//TODO implement end of game
+			game.pause = true;
 
 		PlayBtn.Text = PlayersRepr();
 		SemanticScreenReader.Announce(PlayBtn.Text);
